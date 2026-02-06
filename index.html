@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playstre - AI Game Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-20px); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        .slide-out {
+            animation: slideOut 0.3s ease-out;
+        }
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .card:active {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: scale(0.98);
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+        .safe-area-inset-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .suggestion-chip {
+            padding: 12px 20px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .suggestion-chip:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .system-message {
+            padding: 8px 12px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+        .user-message {
+            padding: 8px 12px;
+            background: #eff6ff;
+            border-radius: 8px;
+            margin-left: auto;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Web-first container: centered, max-width for spacious layout -->
+    <div class="min-h-screen bg-gray-50 flex flex-col relative">
+        
+        <!-- Main Content Area -->
+        <div id="main-content" class="flex-1 overflow-y-auto">
+            <div id="app"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/screens/auth.js"></script>
+    <script src="js/screens/home.js"></script>
+    <script src="js/screens/editor.js"></script>
+    <script src="js/screens/search.js"></script>
+    <script src="js/screens/builder.js"></script>
+    <script src="js/screens/game.js"></script>
+    <script src="js/screens/profile.js"></script>
+    <script src="js/screens/settings.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
