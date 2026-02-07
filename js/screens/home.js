@@ -18,7 +18,114 @@ let dashboardState = {
     pinnedPlayers: null
 };
 
+// Descriptions for each option
+const gameTypeDescriptions = {
+    'Racing': 'Fast-paced games focused on driving or vehicles.',
+    'Shooting': 'Action games where aiming and firing is key.',
+    'Cards': 'Games that use cards, strategy, and luck.'
+};
+
+const gameSubtypeDescriptions = {
+    'Arcade': 'Simpler, action-oriented gameplay with quick rewards.',
+    'Simulator': 'Realistic simulation of vehicles, combat, or cards.',
+    'Open World': 'Large maps to explore with freedom of choice.',
+    'Nascar': 'Racing focused on speed and professional tracks.',
+    'Tactical': 'Requires strategy and careful planning.',
+    'Battle Royale': 'Last player standing wins in a competitive arena.',
+    'Strategy': 'Careful planning to outwit opponents.',
+    'Poker': 'Classic card game of betting and bluffing.',
+    'Collectible': 'Games centered around collecting and deck-building.'
+};
+
+const gameThemeDescriptions = {
+    'Jungle': 'Lush forests, wildlife, and survival challenges.',
+    'Sci-Fi': 'Futuristic technology, space, or aliens.',
+    'Realistic': 'Grounded in real-world visuals and physics.'
+};
+
+const playerCountDescriptions = {
+    1: 'Single player experience.',
+    2: 'Play with a friend.',
+    3: 'Small group of players.',
+    4: 'Up to four players for multiplayer fun.'
+};
+
+// Updated getCurrentSuggestions
+function getCurrentSuggestions() {
+    const makeCardHtml = (label, description) => `
+        <div style="
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            text-align: center;
+            width: 13.75rem;
+        ">
+            <div style="font-weight:600; color:#1e293b;">${label}</div>
+            <div style="font-size:0.85rem; color:#475569; line-height:1.3;">${description}</div>
+        </div>
+    `;
+
+    if (!dashboardState.pinnedType) {
+        return gameTypes.map(type => ({
+            category: 'type',
+            value: type,
+            text: makeCardHtml(type, gameTypeDescriptions[type])
+        }));
+    } else if (!dashboardState.pinnedSubtype) {
+        const typeKey = dashboardState.pinnedType.charAt(0).toUpperCase() + dashboardState.pinnedType.slice(1);
+        const subtypes = gameSubtypes[typeKey] || [];
+        return subtypes.map(subtype => ({
+            category: 'subtype',
+            value: subtype.toLowerCase().replace(' ', '-'),
+            text: makeCardHtml(subtype, gameSubtypeDescriptions[subtype])
+        }));
+    } else if (!dashboardState.pinnedTheme) {
+        return gameThemes.map(theme => ({
+            category: 'theme',
+            value: theme.toLowerCase().replace(' ', '-'),
+            text: makeCardHtml(theme, gameThemeDescriptions[theme])
+        }));
+    } else if (!dashboardState.pinnedPlayers) {
+        return playerCounts.map(count => ({
+            category: 'players',
+            value: count.toString(),
+            text: makeCardHtml(`${count} Player${count > 1 ? 's' : ''}`, playerCountDescriptions[count])
+        }));
+    }
+
+    return [];
+}
+
+// Updated renderHomeScreen heading
+function getStepHeading() {
+    if (!dashboardState.pinnedType) return 'Step 1: Select a game type';
+    if (!dashboardState.pinnedSubtype) return 'Step 2: Select a game subtype';
+    if (!dashboardState.pinnedTheme) return 'Step 3: Select a theme';
+    if (!dashboardState.pinnedPlayers) return 'Step 4: Select player count';
+    return 'All steps completed!';
+}
+
 function renderHomeScreen(params) {
+    // Progress bar HTML
+    const progressSteps = getProgressSteps();
+    const progressHtml = `
+        <div class="flex gap-2 mb-8 justify-center">
+            ${progressSteps.map(completed => `
+                <div style="
+                    flex: 1;
+                    height: 0.5rem;
+                    border-radius: 0.25rem;
+                    background: ${completed 
+                        ? 'linear-gradient(to bottom right, #93c5fd, #c4b5fd)'
+                        : '#e5e7eb'};                    
+                    transition: background-color 0.3s;
+                "></div>
+            `).join('')}
+        </div>
+    `;
+
     // Reset dashboard state if not already set
     if (!dashboardState.pinnedType && !dashboardState.pinnedSubtype && 
         !dashboardState.pinnedTheme && !dashboardState.pinnedPlayers) {
@@ -53,13 +160,13 @@ function renderHomeScreen(params) {
             >
                 ${pinnedTags.map(tag => `
                     <span
-                        class="pinned-tag px-3 py-1 bg-white text-blue-800 rounded-full text-sm flex items-center gap-2"
+                        class="pinned-tag px-3 py-1 bg-white text-blue-500 rounded-full text-sm flex items-center gap-2"
                         data-category="${tag.category}"
                         data-value="${tag.value}"
                     >
                         ${tag.text}
                         <button
-                            class="unpin-btn text-blue-800 hover:text-red-600"
+                            class="unpin-btn text-blue-500 hover:text-red-600"
                             data-category="${tag.category}"
                         >
                             ×
@@ -73,7 +180,7 @@ function renderHomeScreen(params) {
     
     const myGamesHtml = myGames.length > 0 
         ? myGames.map(game => createDashboardGameCard(game)).join('')
-        : '<p class="text-gray-500 text-center py-8">No games yet. Create your first game using a suggestion above!</p>';
+        : '<p class="text-gray-500 text-center py-8">No games yet. Create your first game by following the steps above!</p>';
     
     const canBuild = dashboardState.pinnedType && dashboardState.pinnedSubtype && 
                      dashboardState.pinnedTheme && dashboardState.pinnedPlayers;
@@ -119,14 +226,17 @@ function renderHomeScreen(params) {
             </div>
 
             <!-- Main Content Section -->
-            <div class="max-w-6xl mx-auto px-8 py-16">
+            <div class="max-w-6xl mx-auto px-8 py-12">
                 <!-- Suggestions Section -->
                 <div class="mb-20">
+                    ${progressHtml}
                     <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Suggestions
+                        ${getStepHeading()}
                     </h2>
                     <div class="flex flex-wrap gap-3" id="suggestions-container">
-                        ${suggestionsHtml}
+                        ${suggestions.length > 0 
+                            ? suggestionsHtml 
+                            : '<p class="text-gray-500 text-left w-full">Press the build button to generate your game.</p>'}
                     </div>
                 </div>
 
@@ -190,41 +300,6 @@ function initHomeScreen() {
             navigateTo('editor', { gameId });
         });
     });
-}
-
-function getCurrentSuggestions() {
-    if (!dashboardState.pinnedType) {
-        // Show types
-        return gameTypes.map(type => ({
-            category: 'type',
-            value: type.toLowerCase(),
-            text: type
-        }));
-    } else if (!dashboardState.pinnedSubtype) {
-        // Show subtypes for pinned type
-        const typeKey = dashboardState.pinnedType.charAt(0).toUpperCase() + dashboardState.pinnedType.slice(1);
-        const subtypes = gameSubtypes[typeKey] || [];
-        return subtypes.map(subtype => ({
-            category: 'subtype',
-            value: subtype.toLowerCase().replace(' ', '-'),
-            text: subtype
-        }));
-    } else if (!dashboardState.pinnedTheme) {
-        // Show themes
-        return gameThemes.map(theme => ({
-            category: 'theme',
-            value: theme.toLowerCase().replace(' ', '-'),
-            text: theme
-        }));
-    } else if (!dashboardState.pinnedPlayers) {
-        // Show player counts
-        return playerCounts.map(count => ({
-            category: 'players',
-            value: count.toString(),
-            text: `${count} Player${count > 1 ? 's' : ''}`
-        }));
-    }
-    return [];
 }
 
 function getPinnedTags() {
@@ -359,4 +434,14 @@ function createDashboardGameCard(game) {
             </div>
         </div>
     `;
+}
+
+function getProgressSteps() {
+    // Each step is completed if the corresponding pinned value exists
+    return [
+        !!dashboardState.pinnedType,
+        !!dashboardState.pinnedSubtype,
+        !!dashboardState.pinnedTheme,
+        !!dashboardState.pinnedPlayers
+    ];
 }
