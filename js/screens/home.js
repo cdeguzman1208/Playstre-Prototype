@@ -1,5 +1,8 @@
 // Dashboard screen (Home)
 
+const basePath = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '');
+const heroUrl = `${basePath}/assets/hero.gif`;
+
 // Available options for each category
 const gameTypes = ['Racing', 'Shooting', 'Cards'];
 const gameSubtypes = {
@@ -190,7 +193,7 @@ function renderHomeScreen(params) {
             <!-- Splash / Welcome Section -->
             <div
                 class="relative bg-cover bg-center"
-                style="background-image: url('../../assets/hero.gif');"
+                style="background-image: url('${heroUrl}');"
             >
             <div class="backdrop-blur-[2px]">
                 <button
