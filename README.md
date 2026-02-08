@@ -95,13 +95,12 @@ You can preview your changes before deploying.
 
 ### Install Live Preview
 1. In VS Code, click the **Extensions** icon (left sidebar)
-2. Search for **Live Preview**
-3. Install **Live Preview by Microsoft**
+2. Search for **Live Server**
+3. Install **Live Server by Ritwick Dey**
 
 ### Start the preview
 1. Open `index.html`
-2. Right-click inside the file
-3. Select **Open with Live Preview** or **Show Preview**
+2. Left-click on **Go Live** on the bottom right
 
 🚀 The site will open in a local browser window and auto-refresh when you save.
 
