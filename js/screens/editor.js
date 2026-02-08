@@ -95,52 +95,52 @@ function renderEditorScreen(params) {
 
     return `
         <!-- Top Bar -->
-        <div class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="bg-gray-900 border-b border-gray-700 sticky top-0 z-10">
             <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-                <h1 class="text-xl font-semibold text-gray-900">Playstre</h1>
+                <h1 class="text-xl font-semibold text-gray-100">Playstre</h1>
                 <button 
                     id="publish-btn"
-                    class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium transition-colors hover:bg-blue-600"
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors hover:bg-blue-500"
                 >
                     Publish
                 </button>
             </div>
         </div>
 
-        <div class="flex h-[calc(100vh-73px)] bg-gray-50">
+        <div class="flex h-[calc(100vh-73px)] bg-gray-900">
             <!-- Left Panel -->
-            <div class="w-96 bg-white border-r border-gray-200 flex flex-col">
+            <div class="w-96 bg-gray-900 border-r border-gray-700 flex flex-col">
                 <div class="flex-1 overflow-y-auto p-6" id="chat-messages">
                     ${chatMessagesHtml}
                 </div>
-                <div class="border-t border-gray-200 p-4">
+                <div class="border-t border-gray-700 p-4">
                     <form id="chat-form" class="flex gap-2">
                         <input 
                             type="text"
                             id="chat-input"
                             placeholder="Ask me to change something..."
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            class="flex-1 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         <button 
                             type="submit"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg transition-colors hover:bg-blue-600"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors hover:bg-blue-500"
                         >
                             Send
                         </button>
                     </form>
                 </div>
             </div>
-
+            
             <!-- Right Panel -->
-            <div class="flex-1 bg-gray-100 flex items-center justify-center p-8" id="game-preview">
+            <div class="flex-1 bg-gray-900 flex items-center justify-center p-8" id="game-preview">
                 ${renderGamePreview()}
             </div>
 
             <!-- Publish Modal -->
-            <div id="publish-modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
-                <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 text-center space-y-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Your game is live 🎉</h2>
-                    <p class="text-sm text-gray-600">
+            <div id="publish-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+                <div class="bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6 text-center space-y-4 text-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-100">Your game is live 🎉</h2>
+                    <p class="text-sm text-gray-400">
                         Your game has been saved. Share it or head back to your dashboard.
                     </p>
 
@@ -149,11 +149,11 @@ function renderEditorScreen(params) {
                             id="share-link-input"
                             type="text"
                             readonly
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 bg-gray-50"
+                            class="flex-1 px-3 py-2 border border-gray-600 rounded-lg text-sm text-gray-100 bg-gray-700"
                         />
                         <button
                             id="copy-link-btn"
-                            class="px-3 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200 transition"
+                            class="px-3 py-2 bg-gray-700 rounded-lg text-gray-100 hover:bg-gray-600 transition"
                         >
                             Copy
                         </button>
@@ -161,7 +161,7 @@ function renderEditorScreen(params) {
 
                     <button
                         id="return-dashboard-btn"
-                        class="w-full px-4 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                        class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
                     >
                         Save & Return to Dashboard
                     </button>
@@ -174,30 +174,28 @@ function renderEditorScreen(params) {
 function renderGamePreview() {
     if (editorState.isBuilding) {
         return `
-            <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl w-full text-center">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-2xl w-full text-center text-gray-100">
                 <div class="text-6xl mb-4">🛠️</div>
-                <h2 class="text-2xl font-semibold text-gray-900 mb-2">Building your game</h2>
-                <p class="text-gray-600">This may take a moment…</p>
+                <h2 class="text-2xl font-semibold text-gray-100 mb-2">Building your game</h2>
+                <p class="text-gray-400">This may take a moment…</p>
             </div>
         `;
     }
 
     if (editorState.currentGame) {
         return `
-            <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl w-full">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-2xl w-full text-gray-100">
                 <div class="text-center mb-6">
                     <div class="text-7xl mb-4">${editorState.currentGame.emoji}</div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">
-                        ${editorState.currentGame.title}
-                    </h2>
-                    <p class="text-gray-600">
+                    <h2 class="text-3xl font-bold mb-2">${editorState.currentGame.title}</h2>
+                    <p class="text-gray-400">
                         ${editorState.currentGame.type} • ${editorState.currentGame.subtype} • ${editorState.currentGame.theme}
                     </p>
                 </div>
-                <div class="bg-gray-100 rounded-lg p-8 text-center">
+                <div class="bg-gray-700 rounded-lg p-8 text-center">
                     <div class="text-4xl mb-4">🎮</div>
-                    <p class="text-gray-600">Game Preview</p>
-                    <p class="text-sm text-gray-500 mt-2">
+                    <p class="text-gray-100">Game Preview</p>
+                    <p class="text-sm text-gray-400 mt-2">
                         This is where your playable game would appear
                     </p>
                 </div>
@@ -294,8 +292,12 @@ function updateChatUI() {
     if (!chatContainer) return;
 
     chatContainer.innerHTML = editorState.chatMessages.map(msg => `
-        <div class="chat-message ${msg.type === 'system' ? 'system-message' : 'user-message'} mb-4">
-            <div class="text-sm ${msg.type === 'system' ? 'text-gray-600' : 'text-gray-900'}">${msg.text}</div>
+        <div class="chat-message mb-4 flex ${msg.type === 'system' ? 'justify-start' : 'justify-end'}">
+            <div class="text-sm px-3 py-2 rounded-lg 
+                        ${msg.type === 'system' ? 'text-gray-400 bg-gray-800' : 'text-gray-100 bg-gray-700'} 
+                        max-w-[75%]">
+                ${msg.text}
+            </div>
         </div>
     `).join('');
 

@@ -35,13 +35,14 @@
             animation: pulse 2s ease-in-out infinite;
         }
         .card {
-            background-color: white;
+            background-color: #111827; /* gray-900 */
             border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
             padding: 1.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
+            color: #e5e7eb; /* gray-200 */
         }
         .card:active {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -59,24 +60,25 @@
         }
         .suggestion-chip {
             padding: 12px 20px;
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: #111827;
+            border: 1px solid #1f2937; /* gray-800 */
             border-radius: 8px;
             font-size: 14px;
-            color: #374151;
+            color: #d1d5db; /* gray-300 */
             cursor: pointer;
             transition: all 0.2s;
         }
         .suggestion-chip:hover {
             border-color: #3b82f6;
-            background: #eff6ff;
+            background: #1e3a8a; /* blue-900 */
             transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
         }
         .system-message {
             padding: 8px 12px;
-            background: #f3f4f6;
+            background: #1f2937; /* gray-800 */
             border-radius: 8px;
+            color: #d1d5db;
         }
         .user-message {
             padding: 8px 12px;
@@ -87,9 +89,9 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans">
+<body class="bg-gray-950 text-gray-100 min-h-screen font-sans">
     <!-- Web-first container: centered, max-width for spacious layout -->
-    <div class="min-h-screen bg-gray-50 flex flex-col relative">
+    <div class="min-h-screen bg-gray-950 flex flex-col relative">
         
         <!-- Main Content Area -->
         <div id="main-content" class="flex-1 overflow-y-auto">
@@ -103,11 +105,6 @@
     <script src="js/screens/auth.js"></script>
     <script src="js/screens/home.js"></script>
     <script src="js/screens/editor.js"></script>
-    <script src="js/screens/search.js"></script>
-    <script src="js/screens/builder.js"></script>
-    <script src="js/screens/game.js"></script>
-    <script src="js/screens/profile.js"></script>
-    <script src="js/screens/settings.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

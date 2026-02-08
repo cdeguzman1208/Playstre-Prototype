@@ -7,10 +7,10 @@
 
 function renderAuthScreen(params) {
     return `
-        <div class="min-h-screen flex flex-col items-center justify-center px-6">
+        <div class="min-h-screen flex flex-col items-center justify-center px-6 text-gray-100">
             <div class="text-center mb-8 fade-in">
-                <h1 class="text-5xl font-bold text-gray-900 mb-2">Playstre</h1>
-                <p class="text-gray-600 text-base">Create games in seconds with AI</p>
+                <h1 class="text-5xl font-bold text-white mb-2">Playstre</h1>
+                <p class="text-gray-400 text-base">Create games in seconds with AI</p>            
             </div>
 
             <div class="w-full max-w-sm space-y-4">
@@ -18,32 +18,32 @@ function renderAuthScreen(params) {
                     type="text"
                     id="signin-username"
                     placeholder="Username"
-                    class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
 
                 <input
                     type="password"
                     id="signin-password"
                     placeholder="Password"
-                    class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
 
                 <button
                     id="signin-btn"
-                    class="w-full px-6 py-4 bg-blue-500 text-white rounded-xl font-semibold text-base active:bg-blue-600 transition-all duration-300 shadow-lg active:scale-95"
+                    class="w-full px-6 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold text-base transition-all duration-300 shadow-lg active:scale-95"
                 >
                     Sign In
                 </button>
 
                 <div class="flex items-center gap-3 my-2">
-                    <div class="flex-1 h-px bg-gray-200"></div>
-                    <span class="text-xs text-gray-400">or</span>
-                    <div class="flex-1 h-px bg-gray-200"></div>
+                    <div class="flex-1 h-px bg-gray-800"></div>
+                    <span class="text-xs text-gray-500">or</span>
+                    <div class="flex-1 h-px bg-gray-800"></div>                
                 </div>
 
                 <button
                     id="google-signin-btn"
-                    class="w-full px-6 py-4 border border-gray-300 rounded-xl font-semibold text-base flex items-center justify-center gap-3 hover:bg-gray-50 transition-all active:scale-95"
+                    class="w-full px-6 py-4 border border-gray-700 bg-gray-900 text-gray-200 rounded-xl font-semibold text-base flex items-center justify-center gap-3 hover:bg-gray-800 transition-all active:scale-95"
                 >
                     <!-- Replace with an icon later if desired -->
                     <span class="text-lg">G</span>

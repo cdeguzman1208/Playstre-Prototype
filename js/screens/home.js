@@ -62,8 +62,8 @@ function getCurrentSuggestions() {
             text-align: center;
             width: 13.75rem;
         ">
-            <div style="font-weight:600; color:#1e293b;">${label}</div>
-            <div style="font-size:0.85rem; color:#475569; line-height:1.3;">${description}</div>
+            <div style="font-weight:600; color:#e5e7eb;">${label}</div>
+            <div style="font-size:0.85rem; color:#9ca3af; line-height:1.3;">${description}</div>        
         </div>
     `;
 
@@ -118,8 +118,8 @@ function renderHomeScreen(params) {
                     height: 0.5rem;
                     border-radius: 0.25rem;
                     background: ${completed 
-                        ? 'linear-gradient(to bottom right, #93c5fd, #c4b5fd)'
-                        : '#e5e7eb'};                    
+                        ? 'linear-gradient(to bottom right, #2563eb, #8b5cf6)'
+                        : '#1f2937'};
                     transition: background-color 0.3s;
                 "></div>
             `).join('')}
@@ -160,7 +160,7 @@ function renderHomeScreen(params) {
             >
                 ${pinnedTags.map(tag => `
                     <span
-                        class="pinned-tag px-3 py-1 bg-white text-blue-500 rounded-full text-sm flex items-center gap-2"
+                        class="pinned-tag px-3 py-1 bg-gray-900 text-blue-400 border border-gray-700 rounded-full text-sm flex items-center gap-2"
                         data-category="${tag.category}"
                         data-value="${tag.value}"
                     >
@@ -180,26 +180,30 @@ function renderHomeScreen(params) {
     
     const myGamesHtml = myGames.length > 0 
         ? myGames.map(game => createDashboardGameCard(game)).join('')
-        : '<p class="text-gray-500 text-center py-8">No games yet. Create your first game by following the steps above!</p>';
+        : '<p class="text-gray-400 text-center py-8">No games yet. Create your first game by following the steps above!</p>';
     
     const canBuild = dashboardState.pinnedType && dashboardState.pinnedSubtype && 
                      dashboardState.pinnedTheme && dashboardState.pinnedPlayers;
     
     return `
-        <div class="min-h-screen bg-white">
+        <div class="min-h-screen bg-gray-950 text-gray-100">
             <!-- Splash / Welcome Section -->
-            <div class="bg-gradient-to-br from-blue-300 via-green-100 to-purple-300">
+            <div
+                class="relative bg-cover bg-center"
+                style="background-image: url('/assets/hero.gif');"
+            >
+            <div class="backdrop-blur-[2px]">
                 <button
                     id="logout-btn"
-                    class="absolute top-6 right-8 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                    class="absolute top-6 right-8 text-sm font-medium text-gray-200 hover:text-white transition-colors"
                 >
                     Log out
                 </button>
                 <div class="max-w-6xl mx-auto px-8 py-20 text-center">
-                    <h1 class="text-5xl font-bold text-gray-900 mt-4 mb-4">
+                    <h1 class="text-5xl font-bold text-white mt-4 mb-4">
                         Welcome to Playstre
                     </h1>
-                    <p class="text-xl text-gray-600 mb-8">
+                    <p class="text-xl text-gray-200 mb-8">
                         Describe a game or pick a starting point
                     </p>
 
@@ -209,11 +213,11 @@ function renderHomeScreen(params) {
                             id="welcome-input" 
                             placeholder="Describe your game idea..." 
                             disabled
-                            class="flex-1 px-6 py-4 text-lg border border-gray-200 rounded-xl bg-white/80 text-gray-400 cursor-not-allowed focus:outline-none shadow-sm backdrop-blur"
+                            class="flex-1 px-6 py-4 text-lg border border-gray-200 rounded-xl bg-white/80 text-gray-600 cursor-not-allowed focus:outline-none shadow-sm backdrop-blur"
                         >
                         <button 
                             id="confirm-build-btn" 
-                            class="px-8 py-4 bg-blue-500 text-white rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
+                            class="px-8 py-4 bg-blue-500 text-white rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
                             ${canBuild ? '' : 'disabled'}
                         >
                             Build
@@ -224,25 +228,26 @@ function renderHomeScreen(params) {
                     ${pinnedTagsHtml}
                 </div>
             </div>
+            </div>
 
             <!-- Main Content Section -->
             <div class="max-w-6xl mx-auto px-8 py-12">
                 <!-- Suggestions Section -->
                 <div class="mb-20">
                     ${progressHtml}
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+                    <h2 class="text-2xl font-semibold text-gray-100 mb-6">
                         ${getStepHeading()}
                     </h2>
                     <div class="flex flex-wrap gap-3" id="suggestions-container">
                         ${suggestions.length > 0 
                             ? suggestionsHtml 
-                            : '<p class="text-gray-500 text-left w-full">Press the build button to generate your game.</p>'}
+                            : '<p class="text-gray-400 text-left w-full">Press the build button to generate your game.</p>'}
                     </div>
                 </div>
 
                 <!-- My Games Section -->
-                <div class="bg-gray-50 rounded-2xl p-8">
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+                <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+                    <h2 class="text-2xl font-semibold text-gray-100 mb-6">
                         My Games
                     </h2>
                     <div
@@ -420,16 +425,16 @@ function handleConfirmBuild() {
 function createDashboardGameCard(game) {
     const timeAgo = getTimeAgo(game.createdAt);
     return `
-        <div class="dashboard-game-card bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer p-6 border border-gray-100" data-game-id="${game.id}">
+        <div class="dashboard-game-card bg-gray-950 rounded-xl shadow-sm hover:shadow-lg transition-shadow cursor-pointer p-6 border border-gray-800" data-game-id="${game.id}">
             <div class="flex items-start space-x-4 mb-4">
                 <div class="text-4xl flex-shrink-0">${game.emoji}</div>
                 <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">${game.title}</h3>
+                    <h3 class="text-lg font-semibold text-gray-100 mb-2">${game.title}</h3>
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">${game.type}</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">${game.theme}</span>
+                        <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded-md">${game.type}</span>
+                        <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded-md">${game.theme}</span>
                     </div>
-                    <p class="text-xs text-gray-500">Last edited ${timeAgo}</p>
+                    <p class="text-xs text-gray-400">Last edited ${timeAgo}</p>
                 </div>
             </div>
         </div>
