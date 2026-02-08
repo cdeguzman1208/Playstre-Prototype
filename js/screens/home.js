@@ -190,7 +190,7 @@ function renderHomeScreen(params) {
             <!-- Splash / Welcome Section -->
             <div
                 class="relative bg-cover bg-center"
-                style="background-image: url('/assets/hero.gif');"
+                style="background-image: url('../../assets/hero.gif');"
             >
             <div class="backdrop-blur-[2px]">
                 <button
