@@ -6,6 +6,7 @@ const mockPronouns = ['He/Him', 'She/Her', 'They/Them', 'Other'];
 
 const profileState = {
     name: 'John Doe',
+    username: 'johndoe123',
     pronouns: 'He/Him',
     bio: '"We all make choices in life, but in the end our choices make us." – Andrew Ryan, BioShock',
     editingProfile: false,
@@ -44,7 +45,11 @@ function renderProfileScreen() {
         : `
         <div class="flex-1 space-y-2">
             <h1 class="text-4xl font-bold text-white">${name}</h1>
-            <p class="text-gray-400">${pronouns}</p>
+            <p class="text-gray-400 flex flex-wrap items-center gap-2">
+                <span class="text-gray-400 font-medium">@${profileState.username}</span>
+                <span class="text-gray-400">•</span>
+                <span class="capitalize">${pronouns}</span>
+            </p>
             <p class="text-gray-300">${bio}</p>
             <div class="flex gap-4 mt-4">
                 <button id="edit-profile-btn" class="mt-14 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition">Edit Profile</button>
